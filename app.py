@@ -1,13 +1,10 @@
-from flask import Flask
-from redis import Redis
-import os
+from flask import Flask, Response
+
 app = Flask(__name__)
-redis = Redis(host='redis', port=6379)
 
 @app.route('/')
 def hello():
-    redis.incr('hits')
-    return 'Hello World! I have been seen %s times.' % redis.get('hits')
+    return Response('Hi from your Flask app running in your Docker container!')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80, debug=True)
