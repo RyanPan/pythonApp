@@ -1,17 +1,20 @@
-# this is an official Python runtime, used as the parent image
-FROM python:3.6.5-slim
+# Use an official Python runtime as a parent image
+FROM python:2.7-slim
 
-# set the working directory in the container to /app
+# Set the working directory to /app
 WORKDIR /app
 
-# add the current directory to the container as /app
-ADD . /app
+# Copy the current directory contents into the container as /app
+COPY . /app
 
-# execute everyone's favorite pip command, pip install -r
+# Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-# unblock port 80 for the Flask app to run on
+# Make port 80 available to the world outside this container
 EXPOSE 80
 
-# execute the Flask app
+# Define environment variable
+ENV NAME world
+
+# Run app.py when the container launches
 CMD ["python", "app.py"]
